@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Escolhas Cantina</title>
+    <link rel="stylesheet" href="cabeçalho.css">
+    <link rel="stylesheet" href="footer.css">
+    <link rel="stylesheet" href="final.css">
+</head>
+<body>
+
+    <header>
+      
+        <div class="logo">
+            <img id="logo" alt="freeCodeCamp" src="logo etecia.png">
+        </div>
+                 <div class="menu">
+                    <nav class="links">
+                        <ul>
+                        <a href="#Link-Cardapio">Cardapio</a>
+                        <a href="#Link-Pedidos">Pedidos</a>
+                        <a href="#Link-Carrinho">Carrinho</a>
+                        <a href="#Link-MeuPerfil">Meu Perfil</a>
+                        </ul>
+                    </nav>
+                 </div>
+    </header>
+
+    <h1>Escolhas Cantina</h1>
+
+    <button class="add-button" onclick="showPopup()">Adicionar novo Produto</button>
+
+    <div id="menu" class="menu">
+        <!-- Itens do menu serão adicionados aqui -->
+    </div>
+
+    <!-- Popup para adicionar item -->
+    <div id="popup" class="popup">
+        <div class="popup-content">
+            <button class="close-button" onclick="hidePopup()">×</button>
+            <h2>Adicionar novo Produto</h2>
+            <form id="menu-form">
+                <label for="name">Nome:</label>
+                <input type="text" id="name" required maxlength="50">
+
+                <label for="description">Descrição:</label>
+                <textarea id="description" rows="3" required></textarea>
+
+                <label for="price">Preço:</label>
+                <input type="number" id="price" min="0.00" max="100.00" step="0.01" />
+               
+                <label for="image">Imagem:</label>
+                <input type="file" id="image" accept="image/*" required>
+                
+                <button type="submit">Adicionar</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function showPopup() {
+            document.getElementById('popup').style.display = 'flex';
+        }
+
+        function hidePopup() {
+            document.getElementById('popup').style.display = 'none';
+        }
+
+        document.getElementById('menu-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Evita o envio do formulário
+
+            // Obtém os valores dos campos do formulário
+            const name = document.getElementById('name').value;
+            const description = document.getElementById('description').value;
+            const price = document.getElementById('price').value;
+            const imageInput = document.getElementById('image');
+            const imageFile = imageInput.files[0]; // Obtém o arquivo selecionado
+
+            if (imageFile) {
+                const reader = new FileReader();
+
+                reader.onload = function(e) {
+                    const imageURL = e.target.result; // URL da imagem
+
+                    // Cria o HTML para o novo item
+                    const itemHTML = `
+                        <div class="menu-item">
+                            <img src="${imageURL}" alt="${name}">
+                            <div class="menu-item-content">
+                                <h3>${name}</h3>
+                                <p>${description}</p>
+                                <p class="price">${price}</p>
+                            </div>
+                            <button class="remove-button" onclick="removeItem(this)">×</button>
+                        </div>
+                    `;
+
+                    // Adiciona o novo item à lista
+                    const menu = document.getElementById('menu');
+                    menu.innerHTML += itemHTML;
+
+                    // Limpa o formulário e fecha o popup
+                    document.getElementById('menu-form').reset();
+                    hidePopup();
+                };
+
+                reader.readAsDataURL(imageFile); // Lê o arquivo e converte para URL
+            }
+        });
+
+        function removeItem(button) {
+            // Remove o item pai do botão de remover
+            button.parentElement.remove();
+        }
+    </script>
+ 
+<body>
+    
+ 
+    <footer>
+        <p>&copy; Chefe é chefe vai Corinthians!!!. Todos os direitos reservados.</p>
+        <p>
+            <a href="sobre.html" style="color: rgb(73, 73, 73); text-decoration: none;">Sobre</a> |
+            <a href="contato.html" style="color: rgb(73, 73, 73); text-decoration: none;">Contato</a> |
+            <a href="privacidade.html" style="color: rgb(73, 73, 73); text-decoration: none;">Política de Privacidade</a>
+        </p>
+        <p>
+            Siga-nos nas redes sociais:
+<a href="//twitter.com" target="_blank" style="color: white; text-decoration: none;">Twitter</a> |
+<a href="https://instagram.com" target="_blank" style="color: white; text-decoration: none;">Instagram</a>
+        </p>
+    </footer>
+</body>
+</body>
+</html>
